@@ -26,6 +26,40 @@ clockContainer.innerHTML = now.getHours() + ":" + now.getMinutes() + ":" + now.g
 
 setInterval(function () {
   now = new Date();
-  
+
   clockContainer.innerHTML = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
+}, 1000);
+
+// calcolo quanto tempo manca da now(data) alle 9:30 di domani
+// ovvero, i giorni, ore, minuti e secondi mancanti
+
+const endDate = new Date();
+// ho aggiunto +1 perchè altrimenti coinciderebbe col countdown terminato
+// (grazie, stackoverflow)
+endDate.setDate(endDate.getDate() + 1);
+endDate.setHours(9);
+endDate.setMinutes(30);
+endDate.setSeconds(0);
+const endTime = endDate.getTime();
+
+// Aggiorno il countdown ogni secondo
+  const countdown = setInterval(function() {
+  const now = new Date().getTime();
+  const remainingTime = endTime - now;
+
+  // Calcola i giorni, ore, minuti e secondi rimanenti
+  // (sempre grazie, stackoverflow e florian)
+  const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+  // Modifico l'HTML in tempo reale
+  document.getElementById("countdown").innerHTML = days + "gg " + hours + "ore " + minutes + "min " + seconds + "sec";
+
+  // Se il countdown è terminato, mostra messaggio countdown terminato
+  if (remainingTime < 0) {
+    clearInterval(countdown);
+    document.getElementById("countdown").innerHTML = "Countdown terminato, torna in classe!";
+  }
 }, 1000);
