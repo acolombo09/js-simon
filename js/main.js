@@ -17,9 +17,15 @@ Esiste un oggetto JS in grado di gestire le date?
 Esistono dei metodi per trasformare una data in millisecondi?
 */
 
-// creo un orologio test
+// creo un orologio aggiornato in tempo reale
 const clockContainer = document.getElementById("clock-container");
 
-const now = new Date();
+let now = new Date();
 
 clockContainer.innerHTML = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
+
+setInterval(function () {
+  now = new Date();
+  
+  clockContainer.innerHTML = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
+}, 1000);
