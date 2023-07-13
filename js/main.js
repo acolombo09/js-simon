@@ -43,11 +43,14 @@ endDate.setSeconds(0);
 const endTime = endDate.getTime();
 
 // Aggiorno il countdown ogni secondo
+// tenendo conto del famoso numero di millisecondi trascorsi dal 1 gennaio 1970
   const countdown = setInterval(function() {
   const now = new Date().getTime();
   const remainingTime = endTime - now;
 
-  // Calcola i giorni, ore, minuti e secondi rimanenti
+  /* Calcola i giorni, ore, minuti e secondi rimanenti
+  a partire dalla differenza di tempo calcolata al passaggio precedente, come se stessi calcolando per difetto
+  */
   // (sempre grazie, stackoverflow e florian)
   const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
   const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -62,4 +65,5 @@ const endTime = endDate.getTime();
     clearInterval(countdown);
     document.getElementById("countdown").innerHTML = "Countdown terminato, torna in classe!";
   }
+  // l'impostazione del tempo di esecuzione deve essere per forza di 1 secondo, come per l'orologio aggiornato in tempo reale
 }, 1000);
